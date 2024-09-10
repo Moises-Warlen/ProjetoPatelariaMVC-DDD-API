@@ -1,0 +1,46 @@
+﻿@{ Layout = null; }
+@using System.Linq
+@model IEnumerable<Pastelaria.Web.Application.Tarefa.Model.TarefaModel>
+
+@if (ViewBag.IdPerfil == 1)
+{
+    <div id="btnAddAdicionarTarefa">
+        <a class="btn btn-success float-right" onclick="usuarios.buscarTelaAddTarefa()">
+            Adicionar nova tarefa
+        </a>
+    </div>
+}
+<h2 id="tituloTarefa" class="text-center">Tarefas</h2>
+<!-- Título principal da tabela -->
+<table class="table table-striped" id="tarefa">
+    <thead>
+        <tr>
+            <th>Descrição</th>
+            <th>Data de Atribuição</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var tarefa in Model)
+            {
+                <tr>
+                    <td data-label="Descricao">@tarefa.Descricao</td>
+                    <td data-label="DataAtribuicao">@tarefa.DataAtribuicao.ToString("dd/MM/yyyy")</td>
+                    <td data-label="">
+                        <a class="btn btn-success btn-sm" onclick="usuarios.concluirTarefa(@tarefa.IdTarefa)" title="concluir tarefa">
+                            <i class="fas fa-check-circle"></i> 
+                        </a>
+                        @if (ViewBag.IdPerfil == 1)
+                        {
+                            <a class="btn btn-danger btn-sm" onclick="usuarios.excluirTarefa(@tarefa.IdTarefa)" title="deletar tarefa">
+                                <i class="fas fa-trash-alt"></i> 
+                            </a>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
